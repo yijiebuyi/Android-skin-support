@@ -1,3 +1,5 @@
+include ':skins'
+include ':app'
 include ':demo:skin-night'
 
 // DEMO for android support

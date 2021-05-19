@@ -3,13 +3,22 @@
 buildscript {
     repositories {
         jcenter()
+        google()
         maven {
             url 'https://maven.google.com/'
             name 'Google'
         }
+
+        maven {
+            url = 'http://bin.huwogo.com/artifactory/libs-release-local'
+            credentials {
+                username = 'release'
+                password = 's2UiRCvHrQUbcDH6'
+            }
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
+        classpath 'com.android.tools.build:gradle:4.1.1'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         // NOTE: Do not place your application dependencies here; they belong
@@ -20,10 +29,21 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
         maven {
             url 'https://maven.google.com/'
             name 'Google'
         }
+
+        maven {
+            url = 'http://bin.huwogo.com/artifactory/libs-release-local'
+            credentials {
+                username = 'release'
+                password = 's2UiRCvHrQUbcDH6'
+            }
+        }
+
+        maven { url = "https://jitpack.io" }
     }
 }
 
@@ -32,12 +52,12 @@ task clean(type: Delete) {
 }
 
 ext {
-    compileSdkVersion = 28
+    compileSdkVersion = 30
     minSdkVersion = 14
-    targetSdkVersion = 28
+    targetSdkVersion = 30
 
     supportLibraryVersion = "25.1.1"
-    supportLibraryVersionInHost = "28.0.0"
+    supportLibraryVersionInHost = "30.0.3"
 
     glideVersion = "4.7.1"
 

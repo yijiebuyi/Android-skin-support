@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="GradleMigrationSettings" migrationVersion="1" />
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
@@ -14,15 +16,19 @@
             <option value="$PROJECT_DIR$/androidx/skin-support-cardview" />
             <option value="$PROJECT_DIR$/androidx/skin-support-constraint-layout" />
             <option value="$PROJECT_DIR$/androidx/skin-support-design" />
+            <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/demo" />
             <option value="$PROJECT_DIR$/demo/skin-androidx-app" />
+            <option value="$PROJECT_DIR$/demo/skin-mobile" />
             <option value="$PROJECT_DIR$/demo/skin-night" />
+            <option value="$PROJECT_DIR$/skins" />
             <option value="$PROJECT_DIR$/third-part-support" />
             <option value="$PROJECT_DIR$/third-part-support/circleimageview" />
             <option value="$PROJECT_DIR$/third-part-support/flycotablayout" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
+        <option name="useQualifiedModuleNames" value="true" />
       </GradleProjectSettings>
     </option>
   </component>

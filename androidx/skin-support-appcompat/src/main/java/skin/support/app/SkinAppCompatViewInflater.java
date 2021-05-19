@@ -39,6 +39,9 @@ import skin.support.widget.SkinCompatTextView;
 import skin.support.widget.SkinCompatToolbar;
 import skin.support.widget.SkinCompatView;
 
+/**
+ * update by yijiebuyi
+ */
 public class SkinAppCompatViewInflater implements SkinLayoutInflater, SkinWrapper {
     private static final String LOG_TAG = "SkinAppCompatViewInflater";
 
@@ -56,9 +59,16 @@ public class SkinAppCompatViewInflater implements SkinLayoutInflater, SkinWrappe
         return view;
     }
 
+    /**
+     * add androidx.appcompat.widget.AppCompatxxx support
+     * @param context
+     * @param name
+     * @param attrs
+     * @return
+     */
     private View createViewFromFV(Context context, String name, AttributeSet attrs) {
         View view = null;
-        if (name.contains(".")) {
+        if (name.contains(".") && !name.startsWith("androidx.appcompat.widget.AppCompat")) {
             return null;
         }
         switch (name) {
@@ -75,45 +85,59 @@ public class SkinAppCompatViewInflater implements SkinLayoutInflater, SkinWrappe
                 view = new SkinCompatFrameLayout(context, attrs);
                 break;
             case "TextView":
+            case "androidx.appcompat.widget.AppCompatTextView":
                 view = new SkinCompatTextView(context, attrs);
                 break;
             case "ImageView":
+            case "androidx.appcompat.widget.AppCompatImageView":
                 view = new SkinCompatImageView(context, attrs);
                 break;
             case "Button":
+            case "androidx.appcompat.widget.AppCompatButton":
                 view = new SkinCompatButton(context, attrs);
                 break;
             case "EditText":
+            case "androidx.appcompat.widget.AppCompatEditText":
                 view = new SkinCompatEditText(context, attrs);
                 break;
             case "Spinner":
+            case "androidx.appcompat.widget.AppCompatSpinner":
                 view = new SkinCompatSpinner(context, attrs);
                 break;
             case "ImageButton":
+            case "androidx.appcompat.widget.AppCompatImageButton":
                 view = new SkinCompatImageButton(context, attrs);
                 break;
             case "CheckBox":
+            case "androidx.appcompat.widget.AppCompatImageCheckBox":
                 view = new SkinCompatCheckBox(context, attrs);
                 break;
             case "RadioButton":
+            case "androidx.appcompat.widget.AppCompatImageRadioButton":
                 view = new SkinCompatRadioButton(context, attrs);
                 break;
             case "RadioGroup":
+            case "androidx.appcompat.widget.AppCompatImageRadioGroup":
                 view = new SkinCompatRadioGroup(context, attrs);
                 break;
             case "CheckedTextView":
+            case "androidx.appcompat.widget.AppCompatCheckedTextView":
                 view = new SkinCompatCheckedTextView(context, attrs);
                 break;
             case "AutoCompleteTextView":
+            case "androidx.appcompat.widget.AppCompatAutoCompleteTextView":
                 view = new SkinCompatAutoCompleteTextView(context, attrs);
                 break;
             case "MultiAutoCompleteTextView":
+            case "androidx.appcompat.widget.AppCompatMultiAutoCompleteTextView":
                 view = new SkinCompatMultiAutoCompleteTextView(context, attrs);
                 break;
             case "RatingBar":
+            case "androidx.appcompat.widget.AppCompatRatingBar":
                 view = new SkinCompatRatingBar(context, attrs);
                 break;
             case "SeekBar":
+            case "androidx.appcompat.widget.AppCompatSeekBar":
                 view = new SkinCompatSeekBar(context, attrs);
                 break;
             case "ProgressBar":
