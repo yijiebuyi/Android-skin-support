@@ -45,7 +45,7 @@ public class SkinCompatResources {
     }
 
     public void reset() {
-        reset(SkinCompatManager.getInstance().getStrategies().get(SkinCompatManager.SKIN_LOADER_STRATEGY_NONE));
+        reset(SkinCompatManager.getInstance().getStrategies().get(SkinCompatManager.SkinLoaderStrategy.NONE));
     }
 
     public void reset(SkinCompatManager.SkinLoaderStrategy strategy) {

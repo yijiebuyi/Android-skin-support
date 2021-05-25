@@ -4,6 +4,7 @@ import android.app.Application;
 
 import skin.support.SkinCompatManager;
 import skin.support.app.SkinAppCompatViewInflater;
+import skin.support.load.SkinInternalSDCardLoader;
 
 /**
  * Copyright (C) 2017
@@ -27,7 +28,7 @@ public class SkinApplication extends Application {
         SkinCompatManager.withoutActivity(this)
                 .addInflater(new SkinAppCompatViewInflater())           // 基础控件换肤初始化
                 .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
-                .addStrategy(new CustomSDCardLoader())
-                .setSkinAllActivityEnable(false);
+                .addStrategy(new SkinInternalSDCardLoader())
+                .loadSkin("night.skin", null);
     }
 }

@@ -11,6 +11,10 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.SparseArray;
 
+import androidx.annotation.IntDef;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +32,7 @@ import skin.support.utils.SkinPreference;
 import skin.support.content.res.SkinCompatResources;
 
 public class SkinCompatManager extends SkinObservable {
-    public static final int SKIN_LOADER_STRATEGY_NONE = -1;
-    public static final int SKIN_LOADER_STRATEGY_ASSETS = 0;
-    public static final int SKIN_LOADER_STRATEGY_BUILD_IN = 1;
-    public static final int SKIN_LOADER_STRATEGY_PREFIX_BUILD_IN = 2;
+
     private static volatile SkinCompatManager sInstance;
     private final Object mLock = new Object();
     private final Context mAppContext;
@@ -70,6 +71,27 @@ public class SkinCompatManager extends SkinObservable {
      * 皮肤包加载策略.
      */
     public interface SkinLoaderStrategy {
+
+        int NONE = -1;
+        int ASSETS = 0;
+        int BUILD_IN = 1;
+        int PREFIX_BUILD_IN = 2;
+        /**
+         * 内部存储
+         */
+        int INTERNAL_SD_CARD = 3;
+        /**
+         * 外部存储
+         */
+        int EXTERNAL_SD_CARD = 4;
+
+
+        @IntDef({NONE, ASSETS, BUILD_IN, PREFIX_BUILD_IN, INTERNAL_SD_CARD, EXTERNAL_SD_CARD})
+        @Retention(RetentionPolicy.SOURCE)
+        public @interface Val {
+
+        }
+
         /**
          * 加载皮肤包.
          *
@@ -120,18 +142,18 @@ public class SkinCompatManager extends SkinObservable {
         Drawable getDrawable(Context context, String skinName, int resId);
 
         /**
-         * {@link #SKIN_LOADER_STRATEGY_NONE}
-         * {@link #SKIN_LOADER_STRATEGY_ASSETS}
-         * {@link #SKIN_LOADER_STRATEGY_BUILD_IN}
-         * {@link #SKIN_LOADER_STRATEGY_PREFIX_BUILD_IN}
+         * {@link #NONE}
+         * {@link #ASSETS}
+         * {@link #BUILD_IN}
+         * {@link #PREFIX_BUILD_IN}
          *
          * @return 皮肤包加载策略类型.
          */
-        int getType();
+        @Val int getType();
     }
 
     /**
-     * 初始化换肤框架. 通过该方法初始化，应用中Activity需继承自{@link skin.support.app.SkinCompatActivity}.
+     * 初始化换肤框架. 通过该方法初始化，应用中Activity需继承自{@link androidx.support.app.SkinCompatActivity}.
      *
      * @param context
      * @return
@@ -170,10 +192,10 @@ public class SkinCompatManager extends SkinObservable {
     }
 
     private void initLoaderStrategy() {
-        mStrategyMap.put(SKIN_LOADER_STRATEGY_NONE, new SkinNoneLoader());
-        mStrategyMap.put(SKIN_LOADER_STRATEGY_ASSETS, new SkinAssetsLoader());
-        mStrategyMap.put(SKIN_LOADER_STRATEGY_BUILD_IN, new SkinBuildInLoader());
-        mStrategyMap.put(SKIN_LOADER_STRATEGY_PREFIX_BUILD_IN, new SkinPrefixBuildInLoader());
+        mStrategyMap.put(SkinLoaderStrategy.NONE, new SkinNoneLoader());
+        mStrategyMap.put(SkinLoaderStrategy.ASSETS, new SkinAssetsLoader());
+        mStrategyMap.put(SkinLoaderStrategy.BUILD_IN, new SkinBuildInLoader());
+        mStrategyMap.put(SkinLoaderStrategy.PREFIX_BUILD_IN, new SkinPrefixBuildInLoader());
     }
 
     public Context getContext() {
@@ -249,7 +271,7 @@ public class SkinCompatManager extends SkinObservable {
      * 恢复默认主题，使用应用自带资源.
      */
     public void restoreDefaultTheme() {
-        loadSkin("", SKIN_LOADER_STRATEGY_NONE);
+        loadSkin("", SkinLoaderStrategy.NONE);
     }
 
     /**
@@ -301,7 +323,7 @@ public class SkinCompatManager extends SkinObservable {
     public AsyncTask loadSkin() {
         String skin = SkinPreference.getInstance().getSkinName();
         int strategy = SkinPreference.getInstance().getSkinStrategy();
-        if (TextUtils.isEmpty(skin) || strategy == SKIN_LOADER_STRATEGY_NONE) {
+        if (TextUtils.isEmpty(skin) || strategy == SkinLoaderStrategy.NONE) {
             return null;
         }
         return loadSkin(skin, null, strategy);
@@ -316,7 +338,7 @@ public class SkinCompatManager extends SkinObservable {
     public AsyncTask loadSkin(SkinLoaderListener listener) {
         String skin = SkinPreference.getInstance().getSkinName();
         int strategy = SkinPreference.getInstance().getSkinStrategy();
-        if (TextUtils.isEmpty(skin) || strategy == SKIN_LOADER_STRATEGY_NONE) {
+        if (TextUtils.isEmpty(skin) || strategy == SkinLoaderStrategy.NONE) {
             return null;
         }
         return loadSkin(skin, listener, strategy);
@@ -329,7 +351,7 @@ public class SkinCompatManager extends SkinObservable {
 
     @Deprecated
     public AsyncTask loadSkin(String skinName, final SkinLoaderListener listener) {
-        return loadSkin(skinName, listener, SKIN_LOADER_STRATEGY_ASSETS);
+        return loadSkin(skinName, listener, SkinLoaderStrategy.ASSETS);
     }
 
     /**
@@ -351,7 +373,7 @@ public class SkinCompatManager extends SkinObservable {
      * @param strategy 皮肤包加载策略.
      * @return
      */
-    public AsyncTask loadSkin(String skinName, SkinLoaderListener listener, int strategy) {
+    public AsyncTask loadSkin(String skinName, SkinLoaderListener listener, @SkinLoaderStrategy.Val int strategy) {
         SkinLoaderStrategy loaderStrategy = mStrategyMap.get(strategy);
         if (loaderStrategy == null) {
             return null;
@@ -414,7 +436,7 @@ public class SkinCompatManager extends SkinObservable {
                         mListener.onSuccess();
                     }
                 } else {
-                    SkinPreference.getInstance().setSkinName("").setSkinStrategy(SKIN_LOADER_STRATEGY_NONE).commitEditor();
+                    SkinPreference.getInstance().setSkinName("").setSkinStrategy(SkinLoaderStrategy.NONE).commitEditor();
                     if (mListener != null) {
                         mListener.onFailed("皮肤资源获取失败");
                     }

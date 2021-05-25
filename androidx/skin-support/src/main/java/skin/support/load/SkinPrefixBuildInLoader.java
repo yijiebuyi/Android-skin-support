@@ -41,6 +41,6 @@ public class SkinPrefixBuildInLoader implements SkinLoaderStrategy {
 
     @Override
     public int getType() {
-        return SkinCompatManager.SKIN_LOADER_STRATEGY_PREFIX_BUILD_IN;
+        return SkinLoaderStrategy.PREFIX_BUILD_IN;
     }
 }

@@ -35,6 +35,6 @@ public class SkinNoneLoader implements SkinLoaderStrategy {
 
     @Override
     public int getType() {
-        return SkinCompatManager.SKIN_LOADER_STRATEGY_NONE;
+        return SkinLoaderStrategy.NONE;
     }
 }

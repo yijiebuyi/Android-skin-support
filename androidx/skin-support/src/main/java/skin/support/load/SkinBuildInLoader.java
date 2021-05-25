@@ -41,6 +41,6 @@ public class SkinBuildInLoader implements SkinLoaderStrategy {
 
     @Override
     public int getType() {
-        return SkinCompatManager.SKIN_LOADER_STRATEGY_BUILD_IN;
+        return SkinLoaderStrategy.BUILD_IN;
     }
 }

@@ -26,7 +26,7 @@ import skin.support.content.res.SkinCompatUserThemeManager;
 
 @Skinable
 public class MainActivity extends BaseVCActivity {
-    boolean boolValue = false;
+    boolean boolValue = true;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,7 +65,8 @@ public class MainActivity extends BaseVCActivity {
             public void onClick(View v) {
                 if (boolValue) {
                     boolValue = false;
-                    SkinCompatManager.getInstance().loadSkin("night.skin", null, CustomSDCardLoader.SKIN_LOADER_STRATEGY_SDCARD);
+                    SkinCompatManager.getInstance()
+                            .loadSkin("night.skin", null, SkinCompatManager.SkinLoaderStrategy.INTERNAL_SD_CARD);
                 } else {
                     boolValue = true;
                     SkinCompatManager.getInstance().restoreDefaultTheme();

@@ -55,7 +55,7 @@ public class SkinPreference {
     }
 
     public int getSkinStrategy() {
-        return mPref.getInt(KEY_SKIN_STRATEGY, SkinCompatManager.SKIN_LOADER_STRATEGY_NONE);
+        return mPref.getInt(KEY_SKIN_STRATEGY, SkinCompatManager.SkinLoaderStrategy.NONE);
     }
 
     public SkinPreference setUserTheme(String themeJson) {
