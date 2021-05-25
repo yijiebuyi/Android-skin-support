@@ -70,4 +70,12 @@ public class SkinPreference {
     public void commitEditor() {
         mEditor.apply();
     }
+
+    public SharedPreferences getPref() {
+        return mPref;
+    }
+
+    public SharedPreferences.Editor getPrefEditor() {
+        return mEditor;
+    }
 }
