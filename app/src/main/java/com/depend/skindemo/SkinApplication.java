@@ -29,6 +29,7 @@ public class SkinApplication extends Application {
                 .addInflater(new SkinAppCompatViewInflater())           // 基础控件换肤初始化
                 .setSkinWindowBackgroundEnable(false)                   // 关闭windowBackground换肤，默认打开[可选]
                 .addStrategy(new SkinInternalSDCardLoader())
+                .setSkinSupportGray(true)
                 .loadSkin("night.skin", null);
     }
 }

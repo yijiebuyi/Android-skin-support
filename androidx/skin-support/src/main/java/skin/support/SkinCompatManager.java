@@ -44,6 +44,10 @@ public class SkinCompatManager extends SkinObservable {
     private boolean mSkinAllActivityEnable = true;
     private boolean mSkinStatusBarColorEnable = false;
     private boolean mSkinWindowBackgroundColorEnable = true;
+    /**
+     * 是否支持一键变灰
+     */
+    private boolean mSkinSupportGray = false;
 
     /**
      * 皮肤包加载监听.
@@ -149,7 +153,8 @@ public class SkinCompatManager extends SkinObservable {
          *
          * @return 皮肤包加载策略类型.
          */
-        @Val int getType();
+        @Val
+        int getType();
     }
 
     /**
@@ -313,6 +318,24 @@ public class SkinCompatManager extends SkinObservable {
 
     public boolean isSkinWindowBackgroundEnable() {
         return mSkinWindowBackgroundColorEnable;
+    }
+
+    /**
+     * @param supportGray 是否支持灰色皮肤
+     * @return
+     */
+    public SkinCompatManager setSkinSupportGray(boolean supportGray) {
+        mSkinSupportGray = supportGray;
+        return this;
+    }
+
+    /**
+     * 返回是否支持灰色皮肤
+     *
+     * @return
+     */
+    public boolean isSkinSupportGray() {
+        return mSkinSupportGray;
     }
 
     /**

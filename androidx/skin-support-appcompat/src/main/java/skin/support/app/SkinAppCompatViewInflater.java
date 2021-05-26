@@ -14,6 +14,9 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewParent;
 
+import skin.support.utils.GraySkin;
+import skin.support.view.GrayFrameLayout;
+import skin.support.SkinCompatManager;
 import skin.support.appcompat.R;
 import skin.support.content.res.SkinCompatVectorResources;
 import skin.support.utils.Slog;
@@ -51,16 +54,26 @@ public class SkinAppCompatViewInflater implements SkinLayoutInflater, SkinWrappe
 
     @Override
     public View createView(Context context, String name, AttributeSet attrs) {
-        View view = createViewFromFV(context, name, attrs);
+        View view = null;
+        if (SkinCompatManager.getInstance().isSkinSupportGray() && "FrameLayout".equals(name)) {
+            view = GraySkin.createGrayLayout(context, attrs);
+            if (view != null) {
+                return view;
+            }
+        }
+
+        view = createViewFromFV(context, name, attrs);
 
         if (view == null) {
             view = createViewFromV7(context, name, attrs);
         }
+
         return view;
     }
 
     /**
      * add androidx.appcompat.widget.AppCompatxxx support
+     *
      * @param context
      * @param name
      * @param attrs
