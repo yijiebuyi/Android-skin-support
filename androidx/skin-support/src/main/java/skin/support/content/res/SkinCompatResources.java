@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-
 import android.os.Build;
 import android.text.TextUtils;
 import android.util.TypedValue;
+
+import androidx.annotation.DrawableRes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -107,6 +110,11 @@ public class SkinCompatResources {
         return getColorStateList(SkinCompatManager.getInstance().getContext(), resId);
     }
 
+    /**
+     * @param context 宿主应用的context
+     * @param resId   宿主应用的资源id
+     * @return 返回资源的的id
+     */
     public int getTargetResId(Context context, int resId) {
         try {
             String resName = null;
@@ -233,16 +241,51 @@ public class SkinCompatResources {
         context.getResources().getValue(resId, outValue, resolveRefs);
     }
 
+    /**
+     * @param context 宿主对应的context
+     * @param resId   资源包对应的资源id
+     * @return
+     */
     public static int getColor(Context context, int resId) {
         return getInstance().getSkinColor(context, resId);
     }
 
+    /**
+     * @param context 宿主对应的context
+     * @param resId   资源包对应的资源id
+     * @return
+     */
     public static ColorStateList getColorStateList(Context context, int resId) {
         return getInstance().getSkinColorStateList(context, resId);
     }
 
+    /**
+     * @param context 宿主对应的context
+     * @param resId   资源包对应的资源id
+     * @return 返回资源包中的Drawable
+     */
     public static Drawable getDrawable(Context context, int resId) {
         return getInstance().getSkinDrawable(context, resId);
+    }
+
+    /**
+     * @param context 宿主对应的context
+     * @param resId   资源包对应的资源id
+     * @return 根据资源包中的Drawable解码资源包中的Bitmap
+     */
+    public static Bitmap getBitmap(Context context, @DrawableRes int resId) {
+        return getInstance().decodeBitmapFromResource(context, resId);
+    }
+
+    private Bitmap decodeBitmapFromResource(Context context, @DrawableRes int resId) {
+        if (!isDefaultSkin) {
+            int targetResId = getTargetResId(context, resId);
+            if (targetResId != 0) {
+                return BitmapFactory.decodeResource(mResources, targetResId);
+            }
+        }
+
+        return BitmapFactory.decodeResource(context.getResources(), resId);
     }
 
     public static XmlResourceParser getXml(Context context, int resId) {
